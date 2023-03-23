@@ -24,8 +24,8 @@ const ShoppingCartHeader = styled(Typography)(() => ({
 const ShoppingCart = () => {
   const [items, setItems] = useState<ShoppingCartItem[]>([]);
   console.log(items);
-  const addProduct = (id: string, quantity: any): any => {
-    setItems((prevState: any) => {
+  const addProduct = (id: string, quantity: number): void => {
+    setItems((prevState) => {
       const newArr = [...prevState];
       const index = newArr.findIndex((item) => item.productId === id);
       if (index !== -1) {
@@ -41,17 +41,21 @@ const ShoppingCart = () => {
     productId: string,
     action: "increase" | "decrease"
   ) => {
-    setItems((prevState: any) => {
+    setItems((prevState) => {
       const newArr = [...prevState];
       const index = newArr.findIndex((item) => item.productId === productId);
       if (index !== -1 && action === "increase") {
         newArr[index].quantity++;
         return newArr;
       } else {
-        newArr[index].quantity !== 0
-          ? newArr[index].quantity--
-          : newArr[index].quantity;
-        return newArr;
+        if (newArr[index].quantity > 1) {
+          newArr[index].quantity--;
+          return newArr;
+        } else {
+          return newArr.filter(
+            (item) => item.productId !== newArr[index].productId
+          );
+        }
       }
     });
   };
@@ -63,8 +67,8 @@ const ShoppingCart = () => {
   const deleteProduct = (id: string) => {
     setItems((prevState) => {
       const newArr = [...prevState];
-      const res = newArr.filter(item => item.productId !== id);
-      return res
+      const res = newArr.filter((item) => item.productId !== id);
+      return res;
     });
   };
 

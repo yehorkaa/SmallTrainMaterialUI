@@ -4,16 +4,20 @@ import { styled } from "@mui/material/styles";
 import { PRODUCTS_MAP, ShoppingCartItem } from "../models";
 
 const ItemsListWrapper = styled(Box)(() => ({
-  paddingTop: 20
+  paddingTop: 20,
 }));
 
 type ItemsListProps = {
   items: ShoppingCartItem[];
-  updateQuantity: any;
-  deleteProduct: any;
+  updateQuantity: (productId: string, action: "increase" | "decrease") => void;
+  deleteProduct: (id: string) => void;
 };
 
-const ItemsList: React.FC<ItemsListProps> = ({ items, updateQuantity, deleteProduct }) => {
+const ItemsList: React.FC<ItemsListProps> = ({
+  items,
+  updateQuantity,
+  deleteProduct,
+}) => {
   return (
     <ItemsListWrapper>
       {items.map((item) => {
@@ -31,8 +35,16 @@ const ItemsList: React.FC<ItemsListProps> = ({ items, updateQuantity, deleteProd
               }`}</Typography>
             </Grid>
             <ButtonGroup variant="outlined" aria-label="outlined button group">
-              <Button onClick={() => updateQuantity(item.productId, 'increase')}>+</Button>
-              <Button onClick={() => updateQuantity(item.productId, 'decrease')}>-</Button>
+              <Button
+                onClick={() => updateQuantity(item.productId, "increase")}
+              >
+                +
+              </Button>
+              <Button
+                onClick={() => updateQuantity(item.productId, "decrease")}
+              >
+                -
+              </Button>
               <Button onClick={() => deleteProduct(item.productId)}>x</Button>
             </ButtonGroup>
           </Grid>

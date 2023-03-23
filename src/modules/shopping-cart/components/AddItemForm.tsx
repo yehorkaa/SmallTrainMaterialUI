@@ -27,7 +27,7 @@ const QuantityInputWrapper = styled(FormControl)(() => ({
 }));
 
 interface AddItemFormProps {
-  addProduct: (id: string, quantity: number) => any;
+  addProduct: (id: string, quantity: number) => void;
 }
 
 const AddItemForm: React.FC<AddItemFormProps> = ({addProduct}) => {
